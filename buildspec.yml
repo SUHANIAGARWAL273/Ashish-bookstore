@@ -2,6 +2,8 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 22
     commands:
       - npm ci
 
@@ -12,3 +14,9 @@ phases:
 artifacts:
   files:
     - '**/*'
+  exclude-paths:
+    - node_modules/**/*
+    - .git/**/*
+    - .env*
+    - cloudfront-private-key-new.pem
+    - cloudfront-public-key-new.pem

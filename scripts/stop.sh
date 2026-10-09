@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pkill -f "next start" || true
+pkill -f "[n]ext start" || true
