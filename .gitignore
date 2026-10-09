@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cloudfront public key id
+cloudfront-private-key-new.pem
+cloudfront-public-key-new.pem

@@ -1,34 +1,48 @@
-import { supabase } from "@/lib/supabase";
+import { pool } from "@/lib/db";
 
 export async function POST(req) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  console.log("BODY RECEIVED:", body);
+    console.log("BODY RECEIVED:", body);
 
-  const { data, error } = await supabase
-    .from("orders")
-    .insert([
+    const result = await pool.query(
+      `INSERT INTO orders
+      (name, email, phone, address, city, state, pincode, payment_id, amount, status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING *`,
+      [
+        body.name,
+        body.email,
+        body.phone,
+        body.address,
+        body.city,
+        body.state,
+        body.pincode,
+        body.payment_id,
+        900,
+        "paid",
+      ]
+    );
+
+    console.log("RDS INSERT DATA:", result.rows);
+
+    return Response.json({
+      success: true,
+      data: result.rows,
+    });
+
+  } catch (error) {
+    console.error("RDS INSERT ERROR:", error);
+
+    return Response.json(
       {
-        name: body.name,
-        email: body.email,
-        phone: body.phone,
-        address: body.address,
-        city: body.city,
-        state: body.state,
-        pincode: body.pincode,
-        payment_id: body.payment_id,
-        amount: 900,
-        status: "paid",
+        success: false,
+        error: error.message,
       },
-    ])
-    .select();
-
-  console.log("INSERT DATA:", data);
-  console.log("INSERT ERROR:", error);
-
-  return Response.json({
-    success: true,
-    data,
-    error,
-  });
+      {
+        status: 500,
+      }
+    );
+  }
 }

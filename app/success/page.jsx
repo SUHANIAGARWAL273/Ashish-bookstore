@@ -1,6 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 export default function SuccessPage() {
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function getDownloadLink() {
+    setLoading(true);
+
+    const res = await fetch("/api/download");
+    const data = await res.json();
+
+    setDownloadUrl(data.url);
+    setLoading(false);
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
 
@@ -37,6 +53,27 @@ export default function SuccessPage() {
           </p>
 
         </div>
+
+        {/* DOWNLOAD BUTTON */}
+
+        {!downloadUrl ? (
+          <button
+            onClick={getDownloadLink}
+            disabled={loading}
+            className="bg-green-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-700 transition mb-6"
+          >
+            {loading ? "Preparing Download..." : "Download Your Books"}
+          </button>
+        ) : (
+          <a
+            href={downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-700 transition mb-6"
+          >
+            Open PDF
+          </a>
+        )}
 
         <div className="flex flex-col md:flex-row gap-4 justify-center">
 

@@ -106,7 +106,7 @@
               <div className="flex justify-center items-center gap-6 flex-wrap">
 
                 <Image
-                  src="/book_vol1.png"
+                  src="https://d117z51sy2soxm.cloudfront.net/book+vol1..png"
                   alt="Volume 1"
                   width={240}
                   height={340}
@@ -114,7 +114,7 @@
                 />
 
                 <Image
-                  src="/book_vol2.png"
+                  src="https://d117z51sy2soxm.cloudfront.net/book+vol+2..png"
                   alt="Volume 2"
                   width={240}
                   height={340}
