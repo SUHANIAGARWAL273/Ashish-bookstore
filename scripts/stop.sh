@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pkill -f "[n]ext start" || true
+pkill -f "[n]ode server.js" || true

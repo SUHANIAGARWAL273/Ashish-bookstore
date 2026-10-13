@@ -1,8 +1,11 @@
+
 #!/bin/bash
 set -e
 
 cd /home/ec2-user/bookstore
 
-npm ci --omit=dev
+# Stop any previous Next.js server
+pkill -f "[n]ode server.js" || true
 
-nohup npm run start > /home/ec2-user/bookstore.log 2>&1 &
+# Start the standalone Next.js server
+nohup node server.js > /home/ec2-user/bookstore.log 2>&1 &
